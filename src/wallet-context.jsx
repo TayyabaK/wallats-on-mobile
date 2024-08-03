@@ -58,12 +58,14 @@ export const WalletProvider = ({ children }) => {
   };
 
   const connectPhantom = async () => {
-    if (!window.solana || !window.solana.isPhantom) {
+    const isPhantomInstalled = window.phantom?.solana?.isPhantom;
+
+    if (!isPhantomInstalled) {
       alert('Phantom is not installed. Please install it to continue.');
       return;
     }
     try {
-      const response = await window.solana.connect();
+      const response = await window.phantom.solana.connect();
       setPhantomAddress(response.publicKey.toString());
       setWallet('Phantom');
       localStorage.setItem('selectedWallet', response.publicKey.toString());
